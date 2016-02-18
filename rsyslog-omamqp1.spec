@@ -278,9 +278,41 @@ Requires:       openssl
 
 
 %prep
-%setup -c -n rsyslog-omamqp1 -a 1 -a 2
+%setup -c -n rsyslog-omamqp1 -T -a 0 -a 1
+pushd rsyslog-%{RSYSLOG_VERSION}
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+popd
+
 
 %build
+
+## PROTON BUILD ##
+pushd qpid-proton-%{PROTON_VERSION}
+
+# add for next rebase:
+#    -DBUILD_CPP=OFF \
+#    -DBUILD_GO=OFF \
+%cmake \
+    -DBUILD_JAVA=OFF \
+    -DBUILD_JAVASCRIPT=OFF \
+    -DBUILD_PERL=OFF \
+    -DBUILD_PHP=OFF \
+    -DBUILD_PYTHON=OFF \
+    -DBUILD_RUBY=OFF \
+    -DBUILD_TESTING=OFF \
+    .
+popd
+
+## RSYSLOG OMAMQP1 MODULE BUILD ##
+
+pushd rsyslog-%{RSYSLOG_VERSION}
 %ifarch sparc64
 #sparc64 need big PIE
 export CFLAGS="$RPM_OPT_FLAGS -fPIE -DSYSLOGD_PIDNAME=\\\"syslogd.pid\\\""
@@ -340,6 +372,9 @@ export HIREDIS_LIBS=-L%{_libdir}
 	--enable-snmp \
 	--enable-unlimited-select \
 	--enable-usertools \
+        --enable-omamqp1
+
+poopybum
 
 ./config.status --file=plugins/omamqp1/Makefile
 PKG_CONFIG=${PKG_CONFIG:-pkg-config}
