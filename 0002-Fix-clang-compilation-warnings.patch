@@ -1,0 +1,35 @@
+From cf5c020bb126c23f4e60e527620fff936a6dcd69 Mon Sep 17 00:00:00 2001
+From: Kenneth Giusti <kgiusti@gmail.com>
+Date: Wed, 17 Feb 2016 15:44:40 -0500
+Subject: [PATCH 2/2] Fix clang compilation warnings
+
+---
+ contrib/omamqp1/omamqp1.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
+
+diff --git a/contrib/omamqp1/omamqp1.c b/contrib/omamqp1/omamqp1.c
+index c3b33f1..7522a17 100644
+--- a/contrib/omamqp1/omamqp1.c
++++ b/contrib/omamqp1/omamqp1.c
+@@ -568,17 +568,11 @@ static void _log_error(const char *message, pn_condition_t *cond)
+ }
+ 
+ 
+-// link, session, connection endpoint state flags
+-static const pn_state_t ENDPOINT_ACTIVE = (PN_LOCAL_ACTIVE | PN_REMOTE_ACTIVE);
+-static const pn_state_t ENDPOINT_CLOSING = (PN_LOCAL_ACTIVE | PN_REMOTE_CLOSED);
+-static const pn_state_t ENDPOINT_CLOSED = (PN_LOCAL_CLOSED | PN_REMOTE_CLOSED);
+-
+-
+ /* is the link ready to send messages? */
+ static sbool _is_ready(pn_link_t *link)
+ {
+     return (link
+-            && pn_link_state(link) == ENDPOINT_ACTIVE
++            && pn_link_state(link) == (PN_LOCAL_ACTIVE | PN_REMOTE_ACTIVE)
+             && pn_link_credit(link) > 0);
+ }
+ 
+-- 
+1.8.3.1
+

@@ -1,10 +1,11 @@
+
 $ builddir=`pwd`
 $ mkdir -p rsyslog_build
-$ wget http://vault.centos.org/centos/7/os/Source/SPackages/rsyslog-7.4.7-12.el7.src.rpm
-$ rpm --define "_topdir $builddir/rsyslog_build" -i rsyslog-7.4.7-12.el7.src.rpm
+$ wget https://copr-be.cloud.fedoraproject.org/results/portante/rsyslog-v8.15/epel-7-x86_64/00149031-rsyslog/rsyslog-8.15.0-1.el7.centos.src.rpm
+$ rpm --define "_topdir $builddir/rsyslog_build" -i rsyslog-8.15.0-1.el7.centos.src.rpm
 $ rpmbuild --define "_topdir $builddir/rsyslog_build" -bp rsyslog_build/SPECS/rsyslog.spec
 $ pushd rsyslog_build/BUILD
-$ tar -cvzf ../../rsyslog-7.4.7-12.tar.gz rsyslog-7.4.7
+$ tar -cvzf ../../rsyslog-8.15.0-1.tar.gz rsyslog-8.15.0
 $ popd
 
 $ mkdir -p proton_build
