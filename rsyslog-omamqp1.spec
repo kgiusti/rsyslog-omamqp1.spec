@@ -24,7 +24,7 @@
 Summary: Rsyslog AMQP v1 output module
 Name: rsyslog-omamqp1
 Version: %{RSYSLOG_VERSION}.%{RSYSLOG_RELEASE}.%{PROTON_VERSION}.%{PROTON_RELEASE}
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: (GPLv3+ and ASL 2.0)
 Group: System Environment/Daemons
 URL: http://www.rsyslog.com/
@@ -528,5 +528,9 @@ rm -f %{buildroot}%{_libdir}/rsyslog/qpid-proton-c/*.so
 %{_libdir}/rsyslog/qpid-proton-c
 
 %changelog
+* Sun Feb 21 2016 Kenneth Giusti - 8.15.0.1.0.10.2-2
+- Shamelessly stolen from Rich's original work.  Modified to build a private
+  copy of the proton library.
+
 * Mon Feb  1 2016 Rich Megginson <rmeggins@redhat.com> 7.4.7-12
 - initial commit - hacked rsyslog.spec
