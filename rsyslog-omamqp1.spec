@@ -34,13 +34,20 @@ Source1: rsyslog-%{RSYSLOG_VERSION}-%{RSYSLOG_RELEASE}.tar.gz
 Patch0: 0001-Output-Module-for-AMQP-1.0-compliant-brokers.patch
 Patch1: 0002-Fix-clang-compilation-warnings.patch
 
+# directory structure under BUILD/
+%define proton_build %{_builddir}/rsyslog-omamqp1/qpid-proton-%{PROTON_VERSION}
+%define rsyslog_build %{_builddir}/rsyslog-omamqp1/rsyslog-%{RSYSLOG_VERSION}
+
+
 %description
 rsyslog-omamqp1 provides the omamqp1 Rsyslog output module.  This
 module sends log messages to an AMQP 1.0-compliant messaging bus.
 
-#
+Requires: rsyslog-%{RSYSLOG_VERSION}-%{RSYSLOG_RELEASE}
+
+######################
 # rsyslog requirements
-#
+######################
 
 BuildRequires: autoconf
 BuildRequires: automake
@@ -75,31 +82,31 @@ Obsoletes: sysklogd < 1.5-11
 %package libdbi
 Summary: Libdbi database support for rsyslog
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: libdbi-devel
 
 %package mysql
 Summary: MySQL support for rsyslog
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: mysql-devel >= 4.0
 
 %package pgsql
 Summary: PostgresSQL support for rsyslog
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: postgresql-devel
 
 %package gssapi
 Summary: GSSAPI authentication and encryption support for rsyslog
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: krb5-devel
 
 %package relp
 Summary: RELP protocol support for rsyslog
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 Requires: librelp >= 1.1.1
 BuildRequires: librelp-devel >= 1.1.1
 BuildRequires: libgcrypt-devel
@@ -107,76 +114,76 @@ BuildRequires: libgcrypt-devel
 %package gnutls
 Summary: TLS protocol support for rsyslog
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: gnutls-devel
 BuildRequires: libgcrypt-devel
 
 %package snmp
 Summary: SNMP protocol support for rsyslog
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: net-snmp-devel
 
 %package udpspoof
 Summary: Provides the omudpspoof module
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: libnet-devel
 
 %package mmjsonparse
 Summary: JSON enhanced logging support
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: liblognorm-devel >= 1.1.2
 
 %package mmnormalize
 Summary: Log normalization support for rsyslog
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: liblognorm-devel >= 1.1.2
 
 %package mmfields
 Summary: mmfields support
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: liblognorm-devel >= 1.1.2
 
 %package pmaixforwardedfrom
 Summary: pmaixforwardedfrom support
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 
 %package mmanon
 Summary: mmanon support
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 
 %package mmutf8fix
 Summary: Fix invalid UTF-8 sequences in messages
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 
 %package ommail
 Summary: Mail support
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 
 %package pmciscoios
 Summary: pmciscoios support
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 
 %if 0%{?fedora}0%{?rhel}>= 6
 %package rsgtutil
 Summary: RSyslog rsgtutil support
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 Requires: %{name}-ksi = %version-%release
 
 %package elasticsearch
 Summary: ElasticSearch output module for rsyslog
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: libuuid-devel
 BuildRequires: libcurl-devel
 
@@ -184,27 +191,27 @@ BuildRequires: libcurl-devel
 %package mongodb
 Summary: MongoDB output support
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: libmongo-client-devel
 %endif
 
 %package kafka
 Summary: Kafka output support
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: adiscon-librdkafka-devel
 
 %package ksi
 Summary: KSI signature support
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 Requires: libksi <= 3.4.0.0
 BuildRequires: libksi-devel
 
 %package mmgrok
 Summary: Grok pattern filtering support
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 Requires: grok
 BuildRequires: json-c-devel glib2-devel grok grok-devel tokyocabinet-devel
 %endif
@@ -213,30 +220,30 @@ BuildRequires: json-c-devel glib2-devel grok grok-devel tokyocabinet-devel
 %package hiredis
 Summary: Redis support for rsyslog
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: hiredis-devel
 %endif
 
 %package mmaudit
 Summary: Message modification module supporting Linux audit format
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 
 %package mmsnmptrapd
 Summary: Message modification module for snmptrapd generated messages
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 
 %package rabbitmq
 Summary: RabbitMQ support for rsyslog
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: librabbitmq-devel >= 0.2
 
 %package crypto
 Summary: Encryption support
 Group: System Environment/Daemons
-Requires: %name = %version-%release
+# Requires: %name = %version-%release
 BuildRequires: libgcrypt-devel
 
 %description libdbi
@@ -388,13 +395,12 @@ Requires:       openssl
 
 
 %prep
-%setup -c -n rsyslog-omamqp1 -T -a 0 -a 1
+%setup -q -c -n rsyslog-omamqp1 -T -a 0 -a 1
 pushd rsyslog-%{RSYSLOG_VERSION}
 %patch0 -p1
 %patch1 -p1
 autoreconf -iv
 popd
-
 
 %build
 
@@ -440,6 +446,12 @@ export LDFLAGS="-pie -Wl,-z,relro -Wl,-z,now"
 export HIREDIS_CFLAGS=-I/usr/include/hiredis
 export HIREDIS_LIBS="-L%{_libdir} -lhiredis"
 %endif
+
+# Let configure know where the bundled proton includes and libs are
+#
+export PROTON_CFLAGS="-I%{proton_build}/proton-c/include"
+export PROTON_LIBS="-L%{proton_build}/proton-c -lqpid-proton"
+
 %configure \
         --prefix=/usr \
         --enable-generate-man-pages \
@@ -495,25 +507,18 @@ export HIREDIS_LIBS="-L%{_libdir} -lhiredis"
         --enable-pmsnare \
         --enable-omamqp1
 
-not-done-yet
+LD_RUN_PATH=%{_libdir}/rsyslog/qpid-proton-c make -C contrib/omamqp1
 
-./config.status --file=contrib/omamqp1/Makefile
-PKG_CONFIG=${PKG_CONFIG:-pkg-config}
-PROTON_CFLAGS=`$PKG_CONFIG --cflags "libqpid-proton >= 0.9" 2>/dev/null`
-PROTON_LIBS=`$PKG_CONFIG --libs "libqpid-proton >= 0.9" 2>/dev/null`
-sed -i -e "s/@PROTON_CFLAGS@/${PROTON_CFLAGS}/g" \
-    -e "s/@PROTON_LIBS@/${PROTON_LIBS}/g" \
-    plugins/omamqp1/Makefile
-LD_RUN_PATH=%{_libdir}/rsyslog/qpid-proton-c make -C plugins/omamqp1
 
 %install
-LD_RUN_PATH=%{_libdir}/rsyslog/qpid-proton-c make -C plugins/omamqp1 DESTDIR=%{buildroot} install
+pushd rsyslog-%{RSYSLOG_VERSION}
+LD_RUN_PATH=%{_libdir}/rsyslog/qpid-proton-c make -C contrib/omamqp1 DESTDIR=%{buildroot} install
 
 # get rid of libtool libraries
 rm -f %{buildroot}%{_libdir}/rsyslog/*.la
-# private version of qpid
+# install private version of libqpid-proton
 install -d -m 755 %{buildroot}%{_libdir}/rsyslog/qpid-proton-c
-install -p -m 755 %{_libdir}/libqpid* %{buildroot}%{_libdir}/rsyslog/qpid-proton-c/
+install -p -m 755 %{proton_build}/proton-c/libqpid-proton.so* %{buildroot}%{_libdir}/rsyslog/qpid-proton-c/
 rm -f %{buildroot}%{_libdir}/rsyslog/qpid-proton-c/*.so
 
 %files
