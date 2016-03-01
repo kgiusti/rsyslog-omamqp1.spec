@@ -24,7 +24,7 @@
 Summary: Rsyslog AMQP v1 output module
 Name: rsyslog-omamqp1
 Version: %{RSYSLOG_VERSION}.%{RSYSLOG_RELEASE}.%{PROTON_VERSION}.%{PROTON_RELEASE}
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: (GPLv3+ and ASL 2.0)
 Group: System Environment/Daemons
 URL: http://www.rsyslog.com/
@@ -67,7 +67,6 @@ BuildRequires: liblogging-stdlog-devel
 BuildRequires: systemd-devel >= 204-8
 %endif
 BuildRequires: zlib-devel
-BuildRequires: qpid-proton-c-devel
 
 Requires: libgt
 Requires: logrotate >= 3.5.2
@@ -405,6 +404,10 @@ rm -f %{buildroot}%{_libdir}/rsyslog/qpid-proton-c/*.so
 %{_libdir}/rsyslog/qpid-proton-c
 
 %changelog
+* Tue Mar 01 2016 Kenneth Giusti - 8.15.0.1.0.10.2-4
+- Remove qpid-proton-c-devel BuildRequires.  Not needed as the proton sources
+  are included in the package
+
 * Mon Feb 22 2016 Kenneth Giusti - 8.15.0.1.0.10.2-3
 - Remove rsyslog subpackage info
 
